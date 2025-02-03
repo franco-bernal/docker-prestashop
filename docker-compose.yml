@@ -1,0 +1,33 @@
+
+services:
+  prestashop_app:
+    image: prestashop/prestashop:8.2
+    container_name: prestashop_app
+    restart: always
+    environment:
+      # Configuración de Prestashop
+      DB_SERVER: mysql_db             # Nombre del contenedor MySQL del stack de Laravel
+      DB_NAME: prestashop             # Nombre de la base de datos que usarás para Prestashop
+      DB_USER: laravel                # Usuario existente en el contenedor MySQL (asegúrate de otorgarle acceso a la DB 'prestashop')
+      DB_PASS: secret
+    # PS_INSTALL_AUTO: "1"            # Realiza la instalación automática si aún no se ha instalado
+      PS_LANGUAGE: es
+      PS_COUNTRY: ES
+    volumes:
+      #- ./app:/var/www/html          # Bind mount: el contenido de Prestashop se guardará en /var/www/francobg-prestashop/app
+      - ./app/html:/var/www/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prestashop.rule=Host(`prestashop.francobg.online`)"
+      - "traefik.http.routers.prestashop.entrypoints=web"
+      - "traefik.http.routers.prestashop-secure.rule=Host(`prestashop.francobg.online`)"
+      - "traefik.http.routers.prestashop-secure.entrypoints=websecure"
+      - "traefik.http.routers.prestashop-secure.tls=true"
+      - "traefik.http.routers.prestashop-secure.tls.certresolver=myresolver"
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    external: true
+

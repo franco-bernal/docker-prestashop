@@ -1,0 +1,32 @@
+# Carpeta de instalación (una vez completada, no es necesaria)
+install/
+
+# Archivos de configuración generados (pueden contener datos sensibles)
+app/config/parameters.php
+app/config/parameters.ini
+app/config/parameters.yml
+
+# Carpetas de caché y logs
+cache/
+var/
+log/
+tools/cache/
+tools/logs/
+mails/cache/
+mails/logs/
+
+# Archivos y carpetas temporales
+*.log
+*.tmp
+.DS_Store
+
+# Dependencias de Composer
+vendor/
+
+# Dependencias de Node (si se usan)
+node_modules/
+
+# Configuraciones de editores/IDE
+.idea/
+.vscode/
+
